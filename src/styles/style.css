@@ -1,0 +1,47 @@
+@import "~bootstrap";
+.card {
+    width: 500px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgb(238, 238, 238), rgb(221, 221, 221));
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.bank-logo-wrap {
+  min-height: 65px;
+}
+input:not(.email) {
+    font-weight: bold;
+    letter-spacing: 10px;
+}
+.form-control {
+    color: #ccc;
+    font-weight: bold;
+}
+.card-number-input-wrap, .row, .email-input-wrap {
+  min-height: 65px
+}
+.elements-group {
+  min-height: 65px
+}
+.loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.payment-msg {
+    margin: 0 auto;
+    width: 50%;
+    font-weight: 900;
+}
+@media (max-width: 420px)
+{
+	.col {
+    min-height: 65px;
+  }
+  input:not(.email) {
+    letter-spacing: 2px;
+  }
+  .payment-msg {
+    width: 90%;
+  }
+}
