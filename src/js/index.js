@@ -1,7 +1,8 @@
 import 'babel-polyfill';
 import '@styles/style';
 const create = require('dom-create-element');
-import Inputmask from 'inputmask';
+import * as $ from 'jquery';
+import 'jquery-mask-plugin';
 import CardInfo from 'card-info';
 const app = document.querySelector('.app');
 const card = create({
@@ -62,8 +63,8 @@ const rightInput = create({
         selector: 'input',
         styles: 'form-control',
         attr: {
-            name: 'cvc-cvv',
-            placeholder: 'CVC/CVV'
+            name: 'card-code',
+            placeholder: 'CVV'
         }
     })
 });
@@ -94,15 +95,14 @@ const submitBtn = create({
 submitBtn.disabled = true;
 elementsGroup.append(submitBtn);
 const dateBeforeInput = document.querySelector('[name="date-before"]');
-const codeInput = document.querySelector('[name="cvc-cvv"]');
-Inputmask('9999 9999 9999 9999').mask(cardNumberInput);
-cardNumberInput.addEventListener('input', function(){
-    let card = new CardInfo(this.value.replace(/_+/g, '')),
-        dynamicMask = card.numberMask.replace(/0/g, '9');
-    Inputmask(dynamicMask).mask(cardNumberInput);
+const codeInput = document.querySelector('[name="card-code"]');
+cardNumberInput.addEventListener('input', function() {
+    let card = new CardInfo(this.value)
+    $('input[name="card-number"]').mask(card.numberMask)
+    if (card.codeName) codeInput.placeholder = card.codeName
 })
-Inputmask('99/99').mask(dateBeforeInput);
-Inputmask('999').mask(codeInput);
+$('input[name="date-before"]').mask('00/00')
+$('input[name="card-code"]').mask('000')
 document.querySelectorAll('input').forEach(field => {
     field.after(create({selector:'div',styles:`invalid-feedback ${field.name}-error`}));
 })
@@ -171,7 +171,7 @@ function validate(value, fieldName) {
             throw new Error('Ваша карта просрочена');
         }
     }
-    if (fieldName === 'cvc-cvv') {
+    if (fieldName === 'card-code') {
         const codeRegExp = /^\d{3}$/;
         if (!codeRegExp.test(value)) {
             throw new Error('Должно быть 3 цифры');
